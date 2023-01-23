@@ -1,7 +1,9 @@
 import 'package:curso_flutter/entity/models/person.dart';
+import 'package:curso_flutter/logic/person_list/person_list_cubit.dart';
 import 'package:curso_flutter/presentation/person_list_widget.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +18,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const PersonsList(),
+      home: BlocProvider(
+        create: (context) => PersonListCubit(),
+        child: PersonsList(),
+      ),
     );
   }
 }
