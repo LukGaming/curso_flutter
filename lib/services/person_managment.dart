@@ -1,5 +1,6 @@
 import 'package:curso_flutter/abstracts/abstract_person_managment.dart';
 import 'package:curso_flutter/entity/models/person.dart';
+import 'package:dio/dio.dart';
 
 class PersonManagment implements AbstractPersonManagment {
   @override
@@ -21,9 +22,22 @@ class PersonManagment implements AbstractPersonManagment {
   }
 
   @override
-  Future<List<Person>> getPersons() {
-    // TODO: implement getPersons
-    throw UnimplementedError();
+  Future<List<Person>> getPersons() async {
+    List<Person> personList = [];
+
+    var result = await Dio().get("http://192.168.0.3:3000/persons");
+
+    (result.data as List).forEach((element) {
+      personList.add(Person(
+        id: element["id"],
+        name: element["name"],
+        lastName: element["lastName"],
+        birthDate: element["birthDate"],
+        email: element["email"],
+      ));
+    });
+
+    return personList;
   }
 
   @override

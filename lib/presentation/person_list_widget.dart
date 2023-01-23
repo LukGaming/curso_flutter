@@ -1,4 +1,5 @@
 import 'package:curso_flutter/entity/models/person.dart';
+import 'package:curso_flutter/services/person_managment.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -20,17 +21,9 @@ class _PersonsListState extends State<PersonsList> {
   }
 
   void getPersons() async {
-    var result = await Dio().get("http://192.168.0.3:3000/persons");
+    List<Person> getPersonList = await PersonManagment().getPersons();
     setState(() {
-      (result.data as List).forEach((element) {
-        personList.add(Person(
-          id: element["id"],
-          name: element["name"],
-          lastName: element["lastName"],
-          birthDate: element["birthDate"],
-          email: element["email"],
-        ));
-      });
+      personList = getPersonList;
     });
   }
 
