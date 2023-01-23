@@ -1,8 +1,10 @@
 import 'package:curso_flutter/entity/models/person.dart';
+import 'package:curso_flutter/logic/person_list/person_list_cubit.dart';
 import 'package:curso_flutter/services/person_managment.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PersonsList extends StatefulWidget {
   const PersonsList({super.key});
@@ -12,19 +14,10 @@ class PersonsList extends StatefulWidget {
 }
 
 class _PersonsListState extends State<PersonsList> {
-  List<Person> personList = [];
   @override
   void initState() {
-    getPersons();
-    // TODO: implement initState
+    context.read<PersonListCubit>().getPersons();
     super.initState();
-  }
-
-  void getPersons() async {
-    List<Person> getPersonList = await PersonManagment().getPersons();
-    setState(() {
-      personList = getPersonList;
-    });
   }
 
   @override
@@ -33,19 +26,29 @@ class _PersonsListState extends State<PersonsList> {
       appBar: AppBar(
         title: const Text("Lista de Pessoas"),
       ),
-      body: ListView.builder(
-        itemBuilder: (context, index) => ListTile(
-          title: Text(
-            "${personList[index].name} ${personList[index].lastName}",
-          ),
-          subtitle: Text(
-            "${personList[index].email}",
-          ),
-          trailing: Text(
-            "${personList[index].birthDate}",
-          ),
-        ),
-        itemCount: personList.length,
+      body: BlocConsumer<PersonListCubit, PersonListState>(
+        listener: (context, state) {
+          // TODO: implement listener
+        },
+        builder: (context, state) {
+          if (state is PersonListLoeaded) {
+            return ListView.builder(
+              itemBuilder: (context, index) => ListTile(
+                title: Text(
+                  "${state.personList[index].name} ${state.personList[index].lastName}",
+                ),
+                subtitle: Text(
+                  "${state.personList[index].email}",
+                ),
+                trailing: Text(
+                  "${state.personList[index].birthDate}",
+                ),
+              ),
+              itemCount: state.personList.length,
+            );
+          }
+          return const Center(child: CircularProgressIndicator());
+        },
       ),
     );
   }
