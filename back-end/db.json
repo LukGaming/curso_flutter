@@ -1,0 +1,25 @@
+{
+    "persons": [
+        {
+            "id": 1,
+            "name": "Paulo Antonio",
+            "lastName": "Ferreira Mendes",
+            "birthDate": "1998-06-11",
+            "email": "paulo@email.com"
+        },
+        {
+            "id": 2,
+            "name": "Gabriel",
+            "lastName": "Martins",
+            "birthDate": "1995-05-16",
+            "email": "gabriel@email.com"
+        },
+        {
+            "id": 3,
+            "name": "João Paulo",
+            "lastName": "Ribeiro",
+            "birthDate": "1995-05-16",
+            "email": "joaopaulo@email.com"
+        }
+    ]
+}
