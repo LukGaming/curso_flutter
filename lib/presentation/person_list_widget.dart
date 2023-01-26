@@ -1,5 +1,6 @@
 import 'package:curso_flutter/entity/models/person.dart';
 import 'package:curso_flutter/logic/person_list/person_list_cubit.dart';
+import 'package:curso_flutter/presentation/add_person_widget.dart';
 import 'package:curso_flutter/services/person_managment.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
@@ -49,6 +50,14 @@ class _PersonsListState extends State<PersonsList> {
           }
           return const Center(child: CircularProgressIndicator());
         },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => AddPerson(),
+          ));
+        },
+        child: Icon(Icons.add),
       ),
     );
   }
